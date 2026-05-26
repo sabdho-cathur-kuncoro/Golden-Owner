@@ -20,6 +20,7 @@ import {
   whiteColor,
 } from "@/constants/theme";
 import { useBottomSheetStore } from "@/stores/bottomSheet.store";
+import { router } from "expo-router";
 import { Bell, ChevronDown } from "lucide-react-native";
 import React, { useState } from "react";
 import {
@@ -63,7 +64,7 @@ export default function Home() {
           <Text style={styles.greetLabel}>Welcome back,</Text>
           <Text style={styles.greetName}>{OwnerProfile.name}</Text>
         </View>
-        <AnimatedPressable onPress={() => {}}>
+        <AnimatedPressable onPress={() => router.push("/notifikasi")}>
           <View style={styles.bellContainer}>
             <Bell size={20} color={primaryColor} />
             <View style={[dot, styles.bellDot]} />

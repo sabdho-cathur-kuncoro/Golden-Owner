@@ -1,4 +1,5 @@
 import {
+  bgTertiaryColor,
   blackTextStyle,
   darkBlueColor,
   darkBlueRGBAColor,
@@ -7,6 +8,7 @@ import {
   greenRGBAColor,
   greyTextStyle,
   lineColor,
+  primaryColor,
   SPACE_16,
   whiteColor,
 } from "@/constants/theme";
@@ -19,19 +21,27 @@ import AnimatedPressable from "./AnimatedPressable";
 import Gap from "./Gap";
 
 const TileNotif = React.memo(({ data, onPress }: any) => {
+  const isDelivery = data?.type === "delivery";
+  const isUnread = !data?.is_read;
+
   return (
     <AnimatedPressable onPress={onPress}>
-      <View style={styles.cardContainer}>
+      <View
+        style={[
+          styles.cardContainer,
+          { backgroundColor: isUnread ? bgTertiaryColor : whiteColor },
+        ]}
+      >
+        {isUnread && <View style={styles.unreadDot} />}
         <View
           style={[
             styles.iconContainer,
             {
-              backgroundColor:
-                data?.type === "delivery" ? darkBlueRGBAColor : greenRGBAColor,
+              backgroundColor: isDelivery ? darkBlueRGBAColor : greenRGBAColor,
             },
           ]}
         >
-          {data?.type === "delivery" ? (
+          {isDelivery ? (
             <FontAwesome6 name={"truck-fast"} size={24} color={darkBlueColor} />
           ) : (
             <BadgeCheck size={28} color={greenColor} />
@@ -39,12 +49,19 @@ const TileNotif = React.memo(({ data, onPress }: any) => {
         </View>
         <Gap height={SPACE_16} />
         <Text
-          style={[blackTextStyle, { fontFamily: FontFamily.satoshiMedium }]}
+          style={[
+            blackTextStyle,
+            {
+              fontFamily: isUnread
+                ? FontFamily.satoshiBold
+                : FontFamily.satoshiMedium,
+            },
+          ]}
         >
           {data?.title ?? "-"}
         </Text>
         <Gap height={SPACE_16} />
-        {data?.type === "delivery" ? (
+        {isDelivery ? (
           <Text style={[greyTextStyle, { fontSize: 12 }]}>
             Pesanan{" "}
             <Text
@@ -86,10 +103,10 @@ const styles = StyleSheet.create({
   cardContainer: {
     padding: SPACE_16,
     borderRadius: 10,
-    backgroundColor: whiteColor,
     marginBottom: SPACE_16,
     borderWidth: 1,
     borderColor: lineColor,
+    overflow: "hidden",
   },
   iconContainer: {
     width: 48,
@@ -97,5 +114,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
+  },
+  unreadDot: {
+    position: "absolute",
+    top: 12,
+    right: 12,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: primaryColor,
   },
 });

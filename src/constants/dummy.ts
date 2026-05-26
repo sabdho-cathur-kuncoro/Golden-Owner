@@ -432,6 +432,7 @@ export const NotifData = [
     snipet: "Pesanan ORD-2026-002 sedan dalam perjalanan ke lokasi Anda.",
     type: "delivery",
     created_at: "",
+    is_read: false,
   },
   {
     id: 2,
@@ -443,6 +444,7 @@ export const NotifData = [
       "Sales Ahmad Kurniawan telah menyetujui pesanan ORD-2026-006. Silakan pantau status selanjutnya di menu transaksi",
     type: "approval",
     created_at: "",
+    is_read: true,
   },
 ];
 export const NotifCategory = [
